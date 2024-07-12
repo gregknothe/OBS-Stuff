@@ -184,4 +184,21 @@ def addCount():
 #countDisplay()
 #addCount()
 
+def monuminTable():
+    df = pd.read_csv("https://raw.githubusercontent.com/GGSTFrameTrap/gameList/main/rankFinalGameList.csv", sep="|").reset_index(drop=True)
+    #print(df)
+    titleList = ["Blue's Clues", "Rugrats", "Dora the Explorer", "Teletubbies", "My Little Pony", 
+                 "Go Diego Go", "CoComelon", "Little Einsteins", "Backyardigans", "Paw Patrol", "Bob the Builder",
+                 "PJ Masks", "Marvel vs. Capcom 3", "Street Fighter III: 3rd Strike"]
+    
+    gameDF = df.loc[df["name"].str.contains("Sesame Street")].reset_index(drop=True)
+    for title in titleList:
+        games = df.loc[df["name"].str.contains(title)].reset_index(drop=True)
+        #print(games)
+        gameDF = pd.concat([gameDF, games]).reset_index(drop=True)
+    #print(gameDF.reset_index(drop=True))    
+    gameDF.reset_index(drop=True).to_csv("monuminGames.csv", sep="|")
+    return
+
+monuminTable()
 
