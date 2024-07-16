@@ -30,6 +30,7 @@ heyList = []
 hotkey_id = obs.OBS_INVALID_HOTKEY_ID
 gameList = pd.read_csv("https://raw.githubusercontent.com/GGSTFrameTrap/gameList/main/rankFinalGameList.csv", sep="|")
 ranceGameList = pd.read_csv("https://raw.githubusercontent.com/GGSTFrameTrap/gameList/main/ranceGameList.csv", sep = "|")
+monuGameList = pd.read_csv("https://raw.githubusercontent.com/GGSTFrameTrap/gameList/main/monuminGames.csv", sep="|") # Altered Lines: 33, 48, 53-54, 112-116###########################
 
 silverFile = "C:/Users/codyb/OneDrive/Documents/pythonScripts/gachaClaire/silverClaireAnimated.gif"
 goldFile = "C:/Users/codyb/OneDrive/Documents/pythonScripts/gachaClaire/goldClaireAnimated.gif"
@@ -44,11 +45,13 @@ sys.stderr = DevNull()
 
 #----------------------Python Code Section---------------------#
 #Just taking the game data from the dataframe and formatting it into something usable. 
-def hey(rance=False):
+def hey(rance=False, monu=False): 
     global gameList
     global ranceGameList
     if rance == True:
         localGameList = ranceGameList
+    elif monu == True:
+        localGameList = monuGameList
     else:
         localGameList = gameList
     x = rand.randint(0,len(localGameList["name"]))
@@ -103,6 +106,11 @@ async def ohHey(ctx):
     if ctx.author.name not in heyList and currCooldown == 0:
         if ctx.author.name == "life_jam":
             game = hey(rance=True)
+            await ctx.send(heyString(ctx.author.name, game[0], game[1], True))
+            heyList.append(ctx.author.name)
+            display_game(game[0], game[2], ctx.author.name, game[3])
+        elif ctx.author.name == "monuminn":
+            game = hey(monu=True)
             await ctx.send(heyString(ctx.author.name, game[0], game[1], True))
             heyList.append(ctx.author.name)
             display_game(game[0], game[2], ctx.author.name, game[3])
