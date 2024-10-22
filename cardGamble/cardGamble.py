@@ -209,6 +209,7 @@ def createFinalFile():
         df = pd.read_csv("cardGamble/gameDataframes/"+game, delimiter="|").fillna("")
         finalDF = pd.concat([finalDF, df])
     finalDF = finalDF.reset_index(drop=True).drop(["Unnamed: 0"], axis=1)
+    finalDF = finalDF[finalDF["imgURL"]!=""]
     finalDF.to_csv("cardGamble/finalFile.csv", sep="|", index=False)
     return finalDF
 
