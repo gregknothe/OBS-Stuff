@@ -41,6 +41,52 @@ gameList2 = ["https://www.ccgtrader.net/games/sailor-moon-ccg",
              "https://www.ccgtrader.net/games/final-fantasy-tcg-opus"
              ]
 
+gameList3 = ["https://www.ccgtrader.net/games/hackenemy-ccg",
+             "https://www.ccgtrader.net/games/chaotic-tcg",
+             "https://www.ccgtrader.net/games/buffy-the-vampire-slayer-ccg",
+             "https://www.ccgtrader.net/games/dice-masters",
+             "https://www.ccgtrader.net/games/mlb-showdown-ccg",
+             "https://www.ccgtrader.net/games/zatch-bell-the-card-battle",
+             "https://www.ccgtrader.net/games/jackie-chan-adventures",
+             "https://www.ccgtrader.net/games/gundam-ms-war-tcg",
+             "https://www.ccgtrader.net/games/fullmetal-alchemist-tcg",
+             "https://www.ccgtrader.net/games/dragon-booster-tcg"
+            ]
+
+gameList4 = ["https://www.ccgtrader.net/games/anachronism",
+             "https://www.ccgtrader.net/games/ani-mayhem-ccg",
+             "https://www.ccgtrader.net/games/24-tcg",
+             "https://www.ccgtrader.net/games/inuyasha-tcg",
+             "https://www.ccgtrader.net/games/the-x-files-ccg",
+             "https://www.ccgtrader.net/games/shaman-king-tcg",
+             "https://www.ccgtrader.net/games/xiaolin-showdown-tcg",
+             "https://www.ccgtrader.net/games/my-hero-academia-ccg",
+             "https://www.ccgtrader.net/games/monster-rancher-ccg",
+             "https://www.ccgtrader.net/games/monster-hunter-hunting-card-tcg",
+             "https://www.ccgtrader.net/games/dreadnought-tcg",
+             "https://www.ccgtrader.net/games/blue-dragon-rpcg",
+             "https://www.ccgtrader.net/games/bleach-tcg",
+             "https://www.ccgtrader.net/games/world-of-warcraft-tcg",
+             "https://www.ccgtrader.net/games/ben-10-ccg",
+             "https://www.ccgtrader.net/games/anachronism",
+             "https://www.ccgtrader.net/games/dragoborne-rise-to-supremacy",
+             "https://www.ccgtrader.net/games/wwe-raw-deal",
+             "https://www.ccgtrader.net/games/torchwood-tcg",
+             "https://www.ccgtrader.net/games/transformers-tcg",
+             "https://www.ccgtrader.net/games/redemption-ccg",
+             "https://www.ccgtrader.net/games/knights-of-the-zodiac-ccg",
+             "https://www.ccgtrader.net/games/dragon-quest-tcg",
+             "https://www.ccgtrader.net/games/caster-chronicles-tcg",
+             "https://www.ccgtrader.net/games/angry-birds",
+             "https://www.ccgtrader.net/games/future-card-buddyfight",
+             "https://www.ccgtrader.net/games/the-simpsons-tcg",
+             "https://www.ccgtrader.net/games/star-trek-the-card-game-ccg",
+             "https://www.ccgtrader.net/games/maplestory-itcg"
+            ]
+
+
+gameList5 = ["https://www.ccgtrader.net/games/dune-ccg"]
+
 def jsonViewer(url):
     resp = requests.get(url)
     data = resp.json()
@@ -80,7 +126,7 @@ def getAllGameSets(gameList):
         getGameSets(game).to_csv("cardGamble/gameSets/"+ game.replace("https://www.ccgtrader.net/games/","")+".csv", sep="|", index=False)
     return
 
-#getAllGameSets(gameList2)
+#getAllGameSets(gameList4)
 
 def getCards(setID):
     setAPICall = "https://api.ccgtrader.co.uk/_/items/card?fields%5B0%5D=id&fields%5B1%5D=name&fields%5B2%5D=number&fields%5B3%5D=subtitle&fields%5B4%5D=rarity.id&fields%5B5%5D=image_url&fields%5B6%5D=image.data.asset_url&fields%5B7%5D=number&fields%5B8%5D=reference&fields%5B9%5D=type&fields%5B10%5D=url_title&filter%5Bset%5D%5Beq%5D=" + str(setID) + "&sort=number%2Ctype%2Cname&limit=4999"
@@ -105,7 +151,7 @@ def getCards(setID):
 
 def createGameDataframe():
     #games = os.listdir("E:\Various Programs\Coding Projects\OBS STUFF\cardGamble\gameSets")
-    games = [game.replace("https://www.ccgtrader.net/games/","") + ".csv" for game in gameList2]
+    games = [game.replace("https://www.ccgtrader.net/games/","") + ".csv" for game in gameList4]
     for game in games:
         print(">>> " + game.replace(".csv","") + " <<<")
         gameDF = pd.read_csv("cardGamble/gameSets/"+game, delimiter="|")
@@ -154,7 +200,7 @@ def gameStats():
     df["unique%"] = df["unique%"].apply(lambda x: f"{x:.3%}")
     return df.sort_values('raw', ascending=False)
 
-print(gameStats())
+#print(gameStats().to_string())
 
 def createFinalFile():
     games = os.listdir("E:\Various Programs\Coding Projects\OBS STUFF\cardGamble\gameDataframes")
